@@ -1,5 +1,4 @@
-from visual import *
-from visual.graph import *
+from vpython import *
 
 alpha="abcdefghijklmnopqrstuvwxyz"
 numbers=["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19"]
@@ -7,12 +6,12 @@ numbers=["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16",
 #this function takes a size and draws a grid with labels of that size, up to and including size 19. 
 def setupDrawing(size):
 	#Get the selected scene so that the grid gets drawn in the right window. Set the centre to 500,500,0 because I've chosen to make make the board 1000x1000.
-	scene= display.get_selected()
-	scene.center=(500,500,0)
+	#scene= display.get_selected()
+	scene.center=vector(500,500,0)
 	
 	#This seperation is the distance between two gridlines, and wood is the background.
 	seperation=1000/(size+3)
-	wood = box(pos =(500, 500, -1), size = (980, 980, 2), color=(0.7, 0.4, 0.1))
+	wood = box(pos =vector(500, 500, -1), size = vector(980, 980, 2), color=vector(0.7, 0.4, 0.1))
 	
 	#axes hold the lines that make up the grid, labs holds the letter labels that appear below each line
 	axes=[]
@@ -31,10 +30,10 @@ def setupDrawing(size):
 		axes.append( curve(pos=[(seperation*2,(i+1)*seperation,0), (1000-seperation*2,(i+1)*seperation, 0)], color=color.white))
 		
 		#four labels are required per row and column pair, above, below, left and right.
-		labs.append( text(text=alpha[i-1], pos = ((i+1)*seperation,seperation/1.5,0), align="center", depth=1, height=seperation/2, color=(1,1,1) ) )
-		labs.append( text(text=numbers[i-1], pos = (seperation/1.5, (i+1)*seperation-25, 0), align="center", depth=1, height=seperation/2, color=(1,1,1) )) 
-		labs.append( text(text=alpha[i-1], pos = ((i+1)*seperation, 1000-seperation,0), align="center", depth=1, height=seperation/2, color=(1,1,1) ) )
-		labs.append( text(text=numbers[i-1], pos = (1000-seperation/1.5, (i+1)*seperation-25, 0), align="center", depth=1, height=seperation/2, color=(1,1,1) )) 
+		labs.append( text(text=alpha[i-1], pos=vector((i+1)*seperation,seperation/1.5,0), align="center", depth=1, height=seperation/2, color=vector(1,1,1) ) )
+		labs.append( text(text=numbers[i-1], pos=vector(seperation/1.5, (i+1)*seperation-25, 0), align="center", depth=1, height=seperation/2, color=vector(1,1,1) )) 
+		labs.append( text(text=alpha[i-1], pos=vector((i+1)*seperation, 1000-seperation,0), align="center", depth=1, height=seperation/2, color=vector(1,1,1) ) )
+		labs.append( text(text=numbers[i-1], pos=vector(1000-seperation/1.5, (i+1)*seperation-25, 0), align="center", depth=1, height=seperation/2, color=vector(1,1,1) )) 
 	#rate(100) just makes sure that the board gets drawn
 	rate(100)
 	return True
@@ -52,9 +51,9 @@ def update(board):
 	except:
 		spheres=[]
 
-	#Find the appropriate size and associated seperation for the board
+	#Find the appropriate size and associated separation for the board
 	size=sqrt(len(board))
-	seperation=1000/(size+3)
+	separation=1000/(size+3)
 	
 	#Loop through the entire board and find their equivalent positions in the real board
 	for i in board:
@@ -62,28 +61,28 @@ def update(board):
 		r=int(i[1])+1
 		#if the current piece is owned by black or white draw a black sphere at the appropriate position,
 		if board[i]["player"]=="Black":
-			spheres.append( sphere(pos= (c*seperation, r*seperation, 0), color = (0.2,0.02,0.2), radius = seperation/2.5)  )
+			spheres.append( sphere(pos=vector(c*separation, r*separation, 0), color=vector(0.2,0.02,0.2), radius = separation/2.5)  )
 		elif board[i]["player"]=="White":
-			spheres.append( sphere(pos= (c*seperation, r*seperation, 0), color = color.white, radius = seperation/2.5)  )
+			spheres.append( sphere(pos=vector(c*separation, r*separation, 0), color = color.white, radius = separation/2.5)  )
 
 
 #this function clears the board of any pieces on it but leaves the background and the labels
 def clear():
 	#get the selected scene and then loop through all of the objects in the scene
-    scene = display.get_selected()
+    #scene = display.get_selected()
     for obj in scene.objects:
         #if the object is an instance of sphere then make it invisible (Vpython has no delete function) and move it to 0,0,500 
         if isinstance(obj, sphere):
             obj.visible=False
-            obj.pos=(0,0,500)
+            obj.pos=vector(0,0,500)
 
 
 #Similar to the clear function above, this will delete ALL objects on the screen instead of just spheres
 def delete():
 	#get the selected scene and loop through all objects in it
-    scene = display.get_selected()
+    #scene = display.get_selected()
     for obj in scene.objects:
 		#make the object invisible and move it to 0,0,500
         obj.visible=False
-        obj.pos=(0,0,500)
+        obj.pos=vector(0,0,500)
 

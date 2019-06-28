@@ -1,4 +1,4 @@
-from visual import *
+from vpython import *
 from visual.filedialog import get_file
 import wx
 

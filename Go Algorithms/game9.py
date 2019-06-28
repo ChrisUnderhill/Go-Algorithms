@@ -6,6 +6,8 @@ from scoring import score
 from board9 import make_a_board
 from GUI import setupDrawing, update,  delete
 
+import cunning_fox
+
 #This function will take in two player functions and a parameter to tell it whether to draw graphics or not, and then runs a game between the two players
 def play_game(player1,player2, graphics=True):
   #make a board and set all the default values
@@ -155,3 +157,6 @@ def competition(player1, player2, gameNum):
     
   #return the number of games won by each player, where "Black" is really player1 and "White" is really player 2.
   return games_won
+
+
+play_game(cunning_fox.play, cunning_fox.playf)
